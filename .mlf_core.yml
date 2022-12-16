@@ -1,0 +1,19 @@
+mlf_core_version: '1.11.4 # <<MLF-CORE_NO_BUMP>>'
+domain: mlflow
+language: pytorch
+project_slug: cell-nuclei-segmentation
+project_slug_no_hyphen: cell_nuclei_segmentation
+template_version: '2.0.0 # <<MLF-CORE_NO_BUMP>>'
+template_handle: mlflow-pytorch
+github_username: caroamn
+creator_github_username: caroamn
+is_github_repo: true
+is_repo_private: false
+is_github_orga: false
+full_name: Carolin Schwitalla
+email: carolin-schwitalla@web.de
+project_name: cell-nuclei-segmentation
+project_short_description: Model for cell and nucleisegmentation of multiplex tissue
+  imaging - MACSima Platform. Trained on the tissuenet dataset.
+version: 0.1.0-SNAPSHOT
+license: MIT
