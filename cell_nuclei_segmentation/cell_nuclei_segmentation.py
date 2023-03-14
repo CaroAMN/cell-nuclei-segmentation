@@ -3,8 +3,8 @@ from argparse import ArgumentParser
 
 import mlflow
 import pytorch_lightning as pl
-from data_loading.data_loader import MNISTDataModule
-from model.model import LightningMNISTClassifier
+from data_loading.data_loader import TissueNetDataModule
+from training import TissueSegmentator
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import TensorBoardLogger
 from rich import print
@@ -32,7 +32,7 @@ if __name__ == "__main__":
         help='log interval of stdout',
     )
     parser = pl.Trainer.add_argparse_args(parent_parser=parser)
-    parser = LightningMNISTClassifier.add_model_specific_args(parent_parser=parser)
+    parser = TissueSegmentator.add_model_specific_args(parent_parser=parser)
 
     mlflow.autolog(1)
     # log conda env and system information
@@ -54,14 +54,14 @@ if __name__ == "__main__":
             print(f'[bold red]{dict_args["accelerator"]}[bold blue] currently not supported. Switching to [bold green]ddp!')
             dict_args['accelerator'] = 'ddp'
 
-    dm = MNISTDataModule(**dict_args)
+    dm = TissueNetDataModule(**dict_args) # change
 
     # TODO MLF-CORE: Enable input data logging
     # MLFCore.log_input_data('data/')
 
     dm.prepare_data()
     dm.setup(stage='fit')
-    model = LightningMNISTClassifier(len_test_set=len(dm.df_test), hparams=parser.parse_args(), **dict_args)
+    model = TissueSegmentator(len_test_set=len(dm.df_test), hparams=parser.parse_args(), **dict_args)
     model.log_every_n_steps = dict_args['log_interval']
 
     # check, whether the run is inside a Docker container or not
